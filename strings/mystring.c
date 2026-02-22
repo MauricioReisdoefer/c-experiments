@@ -69,13 +69,13 @@ const char *String_GetText(String *string)
     return string->data;
 }
 
-const char *String_GetCharAt(String *string, size_t index)
+const char String_GetCharAt(String *string, size_t index)
 {
     if (string == NULL || string->data == NULL || string->length >= index)
     {
-        return "\0";
+        return *"\0";
     }
-    return string->data[index];
+    return (string->data[index]);
 }
 
 size_t String_Length(const String *s)

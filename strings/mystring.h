@@ -22,12 +22,12 @@ StringStatus String_Destroy(String *string);
 StringStatus String_Resize(String *string, size_t desired);
 
 const char *String_GetText(String *string);
-const char *String_GetCharAt(String *string, size_t index);
+const char String_GetCharAt(String *string, size_t index);
 
 size_t String_Length(const String *s);
 size_t String_Capacity(const String *s);
 
-void String_Set(String *string, const char *data, size_t len);
+StringStatus String_Set(String *string, const char *data, size_t len);
 void String_Append(String *string, const char *data);
 void String_Insert(String *s, size_t index, const char *text);
 void String_Remove(String *s, size_t index, size_t count);

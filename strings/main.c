@@ -19,7 +19,7 @@ int main()
         return -1;
     }
 
-    string->data = "lixo\0";
+    String_Set(string, "lixo\0", 5);
 
     StringStatus status_resize = String_Resize(string, 12);
     if (status == STRING_STATUS_ERR_ALLOC)
