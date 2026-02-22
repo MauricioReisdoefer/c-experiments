@@ -96,7 +96,22 @@ size_t String_Capacity(const String *s)
     return s->capacity;
 }
 
-void String_Set(String *string, const char *data);
+StringStatus String_Set(String *string, const char *data, size_t len)
+{
+    if (len >= string->capacity)
+    {
+        return STRING_STATUS_ERR_OUT_OF_RANGE;
+    }
+
+    for (int i = 0; i < len; i++)
+    {
+        string->data[i] = data[i];
+    }
+
+    string->length = len;
+    return STRING_STATUS_OK;
+}
+
 void String_Append(String *string, const char *data);
 void String_Insert(String *s, size_t index, const char *text);
 void String_Remove(String *s, size_t index, size_t count);
