@@ -18,6 +18,12 @@ int Max(int min, int value)
     return min;
 }
 
+int GetNextLayer(int current)
+{
+    int result = Max(0, current - rand() % 3);
+    return result;
+}
+
 int matrix[15][30];
 
 int main()
@@ -27,24 +33,28 @@ int main()
     {
         for (int j = 0; j < WIDTH; j++)
         {
-            if (i == HEIGHT - 1)
+            if (i == 0)
             {
                 matrix[i][j] = 9;
             }
             else
             {
-                matrix[i][j] = 0;
+                matrix[i][j] = GetNextLayer(matrix[i - 1][j]);
             }
         }
     }
-    int z = 1;
 
+    int z = 1;
     while (z)
     {
-        for (int i = 0; i < HEIGHT; i++)
+        for (int i = HEIGHT - 1; i >= 0; i--)
         {
-            for (int j = 0; j < WIDTH; j++)
+            for (int j = WIDTH - 1; j >= 0; j--)
             {
+                if (i > 0)
+                {
+                    matrix[i][j] = GetNextLayer(matrix[i - 1][j]);
+                }
                 printf("%d", matrix[i][j]);
             }
             printf("\n");
@@ -52,10 +62,4 @@ int main()
         Sleep(1000);
         system("cls");
     }
-}
-
-int GetNextLayer(int current)
-{
-    int result = current * rand() % 3;
-    return result;
 }
