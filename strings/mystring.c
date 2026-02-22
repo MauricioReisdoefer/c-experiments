@@ -60,8 +60,23 @@ StringStatus String_Resize(String *string, size_t desired)
     return STRING_STATUS_OK;
 }
 
-const char *String_GetText(String *string);
-const char *String_GetTextInPlace(String *a, size_t index);
+const char *String_GetText(String *string)
+{
+    if (string == NULL || string->data == NULL)
+    {
+        return "\0";
+    }
+    return string->data;
+}
+
+const char *String_GetCharAt(String *string, size_t index)
+{
+    if (string == NULL || string->data == NULL || string->length >= index)
+    {
+        return "\0";
+    }
+    return string->data[index];
+}
 
 size_t String_Length(const String *s)
 {

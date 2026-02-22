@@ -22,7 +22,7 @@ StringStatus String_Destroy(String *string);
 StringStatus String_Resize(String *string, size_t desired);
 
 const char *String_GetText(String *string);
-const char *String_GetTextInPlace(String *a, size_t index);
+const char *String_GetCharAt(String *string, size_t index);
 
 size_t String_Length(const String *s);
 size_t String_Capacity(const String *s);
