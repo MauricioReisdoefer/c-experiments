@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "cstring.h"
+#include "mystring.h"
 
 StringStatus String_Create(String *string, size_t initial_capacity)
 {
