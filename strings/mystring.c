@@ -63,8 +63,23 @@ StringStatus String_Resize(String *string, size_t desired)
 const char *String_GetText(String *string);
 const char *String_GetTextInPlace(String *a, size_t index);
 
-size_t String_Length(const String *s);
-size_t String_Capacity(const String *s);
+size_t String_Length(const String *s)
+{
+    if (s == NULL)
+    {
+        return -1;
+    }
+    return s->length;
+}
+
+size_t String_Capacity(const String *s)
+{
+    if (s == NULL)
+    {
+        return -1;
+    }
+    return s->capacity;
+}
 
 void String_Set(String *string, const char *data);
 void String_Append(String *string, const char *data);
