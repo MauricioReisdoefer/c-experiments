@@ -12,13 +12,13 @@ int Max(int min, int value)
 
 int GetNextLayer(int current)
 {
-    int result = Max(0, current - rand() % 3);
+    int result = Max(0, current - rand() % 2);
     return result;
 }
 
-int matrix[15][30];
-int HEIGHT = 15;
-int WIDTH = 30;
+int matrix[60][102];
+int HEIGHT = 60;
+int WIDTH = 102;
 
 typedef struct
 {
@@ -27,23 +27,25 @@ typedef struct
 
 Color FireIntensityToColor(int intensity)
 {
+    static Color table[10] = {
+        {0, 0, 0, 255},      // 0
+        {40, 0, 0, 255},     // 1
+        {80, 0, 0, 255},     // 2
+        {120, 10, 0, 255},   // 3
+        {160, 30, 0, 255},   // 4
+        {200, 60, 0, 255},   // 5
+        {230, 100, 0, 255},  // 6
+        {255, 150, 0, 255},  // 7
+        {255, 200, 50, 255}, // 8
+        {255, 255, 180, 255} // 9
+    };
+
     if (intensity < 0)
         intensity = 0;
     if (intensity > 9)
         intensity = 9;
 
-    Color c = {0, 0, 0, 255};
-
-    if (intensity == 0)
-        return c;
-
-    float t = intensity / 9.0f;
-
-    c.r = (unsigned char)(255 * t);
-    c.g = (unsigned char)(200 * (t * t));
-    c.b = (unsigned char)(50 * (t * t * t));
-
-    return c;
+    return table[intensity];
 }
 
 int main()
@@ -53,7 +55,7 @@ int main()
         SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
         return -1;
     }
-    SDL_Window *window = SDL_CreateWindow("Fire Animation", 300, 150, SDL_WINDOW_RESIZABLE);
+    SDL_Window *window = SDL_CreateWindow("Fire Animation", WIDTH * 10, HEIGHT * 10, SDL_WINDOW_RESIZABLE);
     SDL_Renderer *renderer = SDL_CreateRenderer(window, NULL);
 
     for (int i = 0; i < HEIGHT; i++)
