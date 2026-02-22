@@ -3,50 +3,12 @@
 #include <Windows.h>
 #include <SDL3/SDL.h>
 
-int Max(int min, int value)
-{
-    if (min < value)
-        return value;
-    return min;
-}
-
-int GetNextLayer(int current)
-{
-    int result = Max(0, current - rand() % 2);
-    return result;
-}
+#include "color.h"
+#include "fire.h"
 
 int matrix[60][102];
 int HEIGHT = 40;
 int WIDTH = 70;
-
-typedef struct
-{
-    unsigned char r, g, b, a;
-} Color;
-
-Color FireIntensityToColor(int intensity)
-{
-    static Color table[10] = {
-        {0, 0, 0, 255},      // 0
-        {40, 0, 0, 255},     // 1
-        {80, 0, 0, 255},     // 2
-        {120, 10, 0, 255},   // 3
-        {160, 30, 0, 255},   // 4
-        {200, 60, 0, 255},   // 5
-        {230, 100, 0, 255},  // 6
-        {255, 150, 0, 255},  // 7
-        {255, 200, 50, 255}, // 8
-        {255, 255, 180, 255} // 9
-    };
-
-    if (intensity < 0)
-        intensity = 0;
-    if (intensity > 9)
-        intensity = 9;
-
-    return table[intensity];
-}
 
 int main(int argc, char *argv[])
 {
