@@ -105,7 +105,7 @@ int main()
                 }
                 SDL_FRect rect;
                 rect.x = j * 10;
-                rect.y = i * 10;
+                rect.y = (HEIGHT - 1 - i) * 10;
 
                 rect.w = 10;
                 rect.h = 10;
