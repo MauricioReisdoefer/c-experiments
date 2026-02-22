@@ -8,25 +8,54 @@ typedef struct Vector2
     int y;
 } Vector2;
 
-int main()
-{
-    printf("main");
-    Sleep(3000);
-    system("cls");
-    printf("main 2");
-}
-
-Vector2 GetNextLayer(Vector2 current)
-{
-    Vector2 result = (Vector2){current.x * rand() % 3, current.y * rand() % 3};
-    result.x = Max(0, result.x);
-    result.y = Max(0, result.y);
-    return result;
-}
+int HEIGHT = 15;
+int WIDTH = 30;
 
 int Max(int min, int value)
 {
     if (min < value)
         return value;
     return min;
+}
+
+int matrix[15][30];
+
+int main()
+{
+
+    for (int i = 0; i < HEIGHT; i++)
+    {
+        for (int j = 0; j < WIDTH; j++)
+        {
+            if (i == HEIGHT - 1)
+            {
+                matrix[i][j] = 9;
+            }
+            else
+            {
+                matrix[i][j] = 0;
+            }
+        }
+    }
+    int z = 1;
+
+    while (z)
+    {
+        for (int i = 0; i < HEIGHT; i++)
+        {
+            for (int j = 0; j < WIDTH; j++)
+            {
+                printf("%d", matrix[i][j]);
+            }
+            printf("\n");
+        }
+        Sleep(1000);
+        system("cls");
+    }
+}
+
+int GetNextLayer(int current)
+{
+    int result = current * rand() % 3;
+    return result;
 }
