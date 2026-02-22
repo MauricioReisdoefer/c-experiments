@@ -40,7 +40,25 @@ StringStatus String_Destroy(String *string)
     return STRING_STATUS_OK;
 }
 
-void String_Resize(String *string, size_t desired);
+StringStatus String_Resize(String *string, size_t desired)
+{
+    if (string == NULL)
+    {
+        return STRING_STATUS_ERR_INVALID_PARAM;
+    }
+    if (string->length < desired)
+    {
+        return STRING_STATUS_ERR_OUT_OF_RANGE;
+    }
+    char *temp = (char *)realloc(string->data, desired);
+    if (temp == NULL)
+    {
+        return STRING_STATUS_ERR_ALLOC;
+    }
+    string->data = temp;
+    string->capacity = desired;
+    return STRING_STATUS_OK;
+}
 
 const char *String_GetText(String *string);
 const char *String_GetTextInPlace(String *a, size_t index);

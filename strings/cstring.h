@@ -19,7 +19,7 @@ typedef enum
 
 StringStatus String_Create(String *string, size_t initial_capacity);
 StringStatus String_Destroy(String *string);
-void String_Resize(String *string, size_t desired);
+StringStatus String_Resize(String *string, size_t desired);
 
 const char *String_GetText(String *string);
 const char *String_GetTextInPlace(String *a, size_t index);
