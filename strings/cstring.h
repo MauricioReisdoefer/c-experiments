@@ -9,8 +9,16 @@ typedef struct String
     size_t capacity;
 } String;
 
-void String_Create(String *string, size_t initial_capacity);
-void String_Destroy(String *string);
+typedef enum
+{
+    STRING_STATUS_OK = 0,
+    STRING_STATUS_ERR_ALLOC,
+    STRING_STATUS_ERR_INVALID_PARAM,
+    STRING_STATUS_ERR_OUT_OF_RANGE
+} StringStatus;
+
+StringStatus String_Create(String *string, size_t initial_capacity);
+StringStatus String_Destroy(String *string);
 void String_Resize(String *string, size_t desired);
 
 const char *String_GetText(String *string);

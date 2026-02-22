@@ -2,8 +2,13 @@
 #include <stdlib.h>
 #include "cstring.h"
 
-void String_Create(String *string, size_t initial_capacity)
+StringStatus String_Create(String *string, size_t initial_capacity)
 {
+    if (!string)
+    {
+        return STRING_STATUS_ERR_INVALID_PARAM;
+    }
+
     if (initial_capacity < 1)
         initial_capacity = 1;
 
@@ -13,23 +18,26 @@ void String_Create(String *string, size_t initial_capacity)
         printf("String_Create: Error Allocating Memory");
         string->capacity = 0;
         string->length = 0;
-        return;
+        return STRING_STATUS_ERR_ALLOC;
     }
 
     string->capacity = initial_capacity;
     string->data[0] = '\0';
     string->length = 0;
+    return STRING_STATUS_OK;
 }
 
-void String_Destroy(String *string)
+StringStatus String_Destroy(String *string)
 {
     if (string == NULL || string->data == NULL)
-        return;
+        return STRING_STATUS_ERR_INVALID_PARAM;
 
     free(string->data);
     string->data = NULL;
     string->capacity = 0;
     string->length = 0;
+
+    return STRING_STATUS_OK;
 }
 
 void String_Resize(String *string, size_t desired);
