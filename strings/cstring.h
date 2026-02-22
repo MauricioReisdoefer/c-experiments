@@ -9,6 +9,10 @@ typedef struct String
     size_t capacity;
 } String;
 
+void String_Create(String *string, size_t initial_capacity);
+void String_Destroy(String *string);
+void String_Resize(String *string, size_t desired);
+
 const char *String_GetText(String *string);
 const char *String_GetTextInPlace(String *a, size_t index);
 
@@ -24,7 +28,3 @@ void String_AppendString(String *a, String *b);
 void String_InsertString(String *a, size_t index, String *b);
 void String_RemoveString(String *a, size_t index, String *b);
 void String_SetString(String *a, String *b);
-
-String String_Create();
-void String_Destroy(String *string);
-void String_Resize(String *string, size_t desired);
