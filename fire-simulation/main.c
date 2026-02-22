@@ -74,8 +74,25 @@ int main()
     }
 
     int z = 1;
+    Uint64 lastTime = SDL_GetTicks();
+    int frameCount = 0;
+    float fps = 0.0f;
     while (z)
     {
+        Uint64 currentTime = SDL_GetTicks();
+        frameCount++;
+
+        if (currentTime - lastTime >= 1000)
+        {
+            fps = frameCount / ((currentTime - lastTime) / 1000.0f);
+            frameCount = 0;
+            lastTime = currentTime;
+
+            char title[64];
+            snprintf(title, sizeof(title), "Fire Animation - FPS: %.2f", fps);
+            SDL_SetWindowTitle(window, title);
+        }
+
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
         SDL_RenderClear(renderer);
         for (int i = HEIGHT - 1; i >= 0; i--)
