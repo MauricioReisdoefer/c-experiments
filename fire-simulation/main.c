@@ -48,8 +48,20 @@ Color FireIntensityToColor(int intensity)
     return table[intensity];
 }
 
-int main()
+int main(int argc, char *argv[])
 {
+
+    int maxFPS = 60;
+
+    if (argc > 1)
+    {
+        maxFPS = atoi(argv[1]);
+        if (maxFPS <= 0)
+            maxFPS = 60;
+    }
+
+    Uint64 frameDelay = 1000 / maxFPS;
+
     if (!SDL_Init(SDL_INIT_VIDEO))
     {
         SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
@@ -117,6 +129,12 @@ int main()
             }
         }
         SDL_RenderPresent(renderer);
+        Uint64 frameTime = SDL_GetTicks() - currentTime;
+
+        if (frameTime < frameDelay)
+        {
+            SDL_Delay(frameDelay - frameTime);
+        }
     }
     SDL_DestroyWindow(window);
 }
