@@ -22,7 +22,7 @@ Para compilar e executar este projeto, você precisará:
 Para compilar o projeto, navegue até o diretório `fire-simulation` e execute:
 
 ```bash
-gcc main.c -IC:/libs/SDL3/include -LC:/libs/SDL3/lib -lSDL3 -o main.exe
+gcc main.c fire.c color.c -IC:/libs/SDL3/include -LC:/libs/SDL3/lib -lSDL3 -o main.exe
 ```
 
 Para executar a simulação:
