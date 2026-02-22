@@ -1,15 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <Windows.h>
-
-typedef struct Vector2
-{
-    int x;
-    int y;
-} Vector2;
-
-int HEIGHT = 15;
-int WIDTH = 30;
+#include <SDL3/SDL.h>
 
 int Max(int min, int value)
 {
@@ -25,9 +17,44 @@ int GetNextLayer(int current)
 }
 
 int matrix[15][30];
+int HEIGHT = 15;
+int WIDTH = 30;
+
+typedef struct
+{
+    unsigned char r, g, b, a;
+} Color;
+
+Color FireIntensityToColor(int intensity)
+{
+    if (intensity < 0)
+        intensity = 0;
+    if (intensity > 9)
+        intensity = 9;
+
+    Color c = {0, 0, 0, 255};
+
+    if (intensity == 0)
+        return c;
+
+    float t = intensity / 9.0f;
+
+    c.r = (unsigned char)(255 * t);
+    c.g = (unsigned char)(200 * (t * t));
+    c.b = (unsigned char)(50 * (t * t * t));
+
+    return c;
+}
 
 int main()
 {
+    if (!SDL_Init(SDL_INIT_VIDEO))
+    {
+        SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
+        return -1;
+    }
+    SDL_Window *window = SDL_CreateWindow("Fire Animation", 300, 150, SDL_WINDOW_RESIZABLE);
+    SDL_Renderer *renderer = SDL_CreateRenderer(window, NULL);
 
     for (int i = 0; i < HEIGHT; i++)
     {
@@ -47,6 +74,8 @@ int main()
     int z = 1;
     while (z)
     {
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, SDL_ALPHA_OPAQUE);
+        SDL_RenderClear(renderer);
         for (int i = HEIGHT - 1; i >= 0; i--)
         {
             for (int j = WIDTH - 1; j >= 0; j--)
@@ -55,11 +84,20 @@ int main()
                 {
                     matrix[i][j] = GetNextLayer(matrix[i - 1][j]);
                 }
-                printf("%d", matrix[i][j]);
+                SDL_FRect rect;
+                rect.x = j * 10;
+                rect.y = i * 10;
+
+                rect.w = 10;
+                rect.h = 10;
+
+                Color cor = FireIntensityToColor(matrix[i][j]);
+
+                SDL_SetRenderDrawColor(renderer, cor.r, cor.g, cor.b, SDL_ALPHA_OPAQUE);
+                SDL_RenderFillRect(renderer, &rect);
             }
-            printf("\n");
         }
-        Sleep(1000);
-        system("cls");
+        SDL_RenderPresent(renderer);
     }
+    SDL_DestroyWindow(window);
 }
