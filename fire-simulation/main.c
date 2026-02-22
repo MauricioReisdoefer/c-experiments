@@ -17,8 +17,8 @@ int GetNextLayer(int current)
 }
 
 int matrix[60][102];
-int HEIGHT = 60;
-int WIDTH = 102;
+int HEIGHT = 40;
+int WIDTH = 70;
 
 typedef struct
 {
