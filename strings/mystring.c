@@ -116,7 +116,46 @@ void String_Append(String *string, const char *data);
 void String_Insert(String *s, size_t index, const char *text);
 void String_Remove(String *s, size_t index, size_t count);
 
-void String_AppendString(String *a, String *b);
-void String_InsertString(String *a, size_t index, String *b);
+void String_AppendString(String *a, String *b)
+{
+    if (a == NULL || b == NULL || b->data == NULL)
+        return;
+
+    if (a->length + b->length >= a->capacity)
+        return;
+
+    for (size_t i = 0; i < b->length; i++)
+    {
+        a->data[a->length + i] = b->data[i];
+    }
+
+    a->length += b->length;
+    a->data[a->length] = '\0';
+}
+
+void String_InsertString(String *a, size_t index, String *b)
+{
+    if (a == NULL || b == NULL || b->data == NULL)
+        return;
+
+    if (index > a->length)
+        return;
+
+    if (a->length + b->length >= a->capacity)
+        return;
+
+    for (size_t i = a->length; i > index; i--)
+    {
+        a->data[i + b->length - 1] = a->data[i - 1];
+    }
+
+    for (size_t i = 0; i < b->length; i++)
+    {
+        a->data[index + i] = b->data[i];
+    }
+
+    a->length += b->length;
+    a->data[a->length] = '\0';
+}
 void String_RemoveString(String *a, size_t index, String *b);
 void String_SetString(String *a, String *b);
