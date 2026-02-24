@@ -153,8 +153,36 @@ void String_InsertString(String *a, size_t index, String *b)
     a->length += b->length;
     a->data[a->length] = '\0';
 }
-void String_RemoveString(String *a, size_t index, String *b);
-void String_SetString(String *a, String *b);
+
+void String_RemoveString(String *a, size_t index, String *b)
+{
+    if (!a || !b)
+        return;
+    if (index >= a->length)
+        return;
+
+    size_t count = b->length;
+
+    if (index + count > a->length)
+        count = a->length - index;
+
+    for (size_t i = index; i + count <= a->length; i++)
+        a->data[i] = a->data[i + count];
+
+    a->length -= count;
+}
+
+void String_SetString(String *a, String *b)
+{
+    if (!a || !b)
+        return;
+
+    for (size_t i = 0; i < b->length; i++)
+        a->data[i] = b->data[i];
+
+    a->length = b->length;
+    a->data[a->length] = '\0';
+}
 
 void String_Append(String *string, const char *data)
 {
