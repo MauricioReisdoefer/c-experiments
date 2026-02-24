@@ -112,10 +112,6 @@ StringStatus String_Set(String *string, const char *data, size_t len)
     return STRING_STATUS_OK;
 }
 
-void String_Append(String *string, const char *data);
-void String_Insert(String *s, size_t index, const char *text);
-void String_Remove(String *s, size_t index, size_t count);
-
 void String_AppendString(String *a, String *b)
 {
     if (a == NULL || b == NULL || b->data == NULL)
@@ -159,3 +155,55 @@ void String_InsertString(String *a, size_t index, String *b)
 }
 void String_RemoveString(String *a, size_t index, String *b);
 void String_SetString(String *a, String *b);
+
+void String_Append(String *string, const char *data)
+{
+    if (!string || !data)
+        return;
+
+    size_t i = 0;
+    while (data[i] != '\0')
+    {
+        string->data[string->length + i] = data[i];
+        i++;
+    }
+
+    string->length += i;
+    string->data[string->length] = '\0';
+}
+
+void String_Insert(String *s, size_t index, const char *text)
+{
+    if (!s || !text)
+        return;
+    if (index > s->length)
+        return;
+
+    size_t add = 0;
+    while (text[add] != '\0')
+        add++;
+
+    for (size_t i = s->length + 1; i > index; i--)
+        s->data[i + add - 1] = s->data[i - 1];
+
+    for (size_t i = 0; i < add; i++)
+        s->data[index + i] = text[i];
+
+    s->length += add;
+}
+
+void String_Remove(String *s, size_t index, size_t count)
+{
+    if (!s)
+        return;
+    if (index >= s->length)
+        return;
+
+    if (index + count > s->length)
+        count = s->length - index;
+
+    for (size_t i = index; i + count <= s->length; i++)
+        s->data[i] = s->data[i + count];
+
+    s->length -= count;
+}
